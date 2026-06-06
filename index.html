@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taste Haven Restaurant</title>
+link rel="stylesheet" href="style.css">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    overflow-x:hidden;
+    background:#000;
+    color:white;
+}
+
+/* Animated Background */
+.hero{
+    position:relative;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    overflow:hidden;
+}
+
+.bg{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:
+    radial-gradient(circle at 20% 20%, #ff6b35, transparent 30%),
+    radial-gradient(circle at 80% 30%, #ffcc00, transparent 25%),
+    radial-gradient(circle at 50% 80%, #ff3c78, transparent 30%),
+    #050505;
+    animation:moveBg 12s infinite alternate ease-in-out;
+}
+
+@keyframes moveBg{
+    from{
+        transform:scale(1) rotate(0deg);
+    }
+    to{
+        transform:scale(1.2) rotate(10deg);
+    }
+}
+
+/* Floating 3D Balls */
+.ball{
+    position:absolute;
+    border-radius:50%;
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(10px);
+    box-shadow:0 0 40px rgba(255,255,255,.2);
+    animation:float 10s infinite ease-in-out;
+}
+
+.ball:nth-child(2){
+    width:180px;
+    height:180px;
+    top:10%;
+    left:10%;
+}
+
+.ball:nth-child(3){
+    width:120px;
+    height:120px;
+    top:70%;
+    right:15%;
+}
+
+.ball:nth-child(4){
+    width:250px;
+    height:250px;
+    top:20%;
+    right:10%;
+}
+
+@keyframes float{
+    50%{
+        transform:translateY(-40px) rotate(180deg);
+    }
+}
+
+.content{
+    position:relative;
+    z-index:2;
+    max-width:800px;
+}
+
+.content h1{
+    font-size:5rem;
+    margin-bottom:15px;
+    text-shadow:0 0 20px rgba(255,255,255,.5);
+}
+
+.content p{
+    font-size:1.3rem;
+    margin-bottom:30px;
+}
+
+/* Buttons */
+.btn{
+    padding:15px 30px;
+    border:none;
+    border-radius:50px;
+    margin:10px;
+    cursor:pointer;
+    font-size:1rem;
+    transition:.3s;
+    color:white;
+}
+
+.menu-btn{
+    background:#ff6b35;
+}
+
+.book-btn{
+    background:#00b894;
+}
+
+.btn:hover{
+    transform:translateY(-5px) scale(1.05);
+    box-shadow:0 10px 25px rgba(255,255,255,.3);
+}
+
+/* Menu Section */
+.menu{
+    padding:80px 10%;
+    background:#111;
+}
+
+.menu h2{
+    text-align:center;
+    margin-bottom:40px;
+    font-size:3rem;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:#1d1d1d;
+    padding:25px;
+    border-radius:20px;
+    transition:.4s;
+}
+
+.card:hover{
+    transform:translateY(-10px) rotateX(10deg);
+    background:#262626;
+}
+
+.price{
+    color:#ffcc00;
+    font-size:1.3rem;
+    margin-top:10px;
+}
+
+/* Reservation Popup */
+.popup{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.8);
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+.popup-content{
+    background:#111;
+    padding:30px;
+    border-radius:20px;
+    width:90%;
+    max-width:400px;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:none;
+    border-radius:10px;
+}
+
+.close{
+    background:red;
+    padding:10px 15px;
+    border:none;
+    color:white;
+    margin-top:10px;
+    cursor:pointer;
+}
+
+.reserve{
+    background:#00b894;
+    padding:10px 15px;
+    border:none;
+    color:white;
+    cursor:pointer;
+}
+
+footer{
+    text-align:center;
+    padding:25px;
+    background:#000;
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+    <div class="bg"></div>
+
+    <div class="ball"></div>
+    <div class="ball"></div>
+    <div class="ball"></div>
+
+    <div class="content">
+        <h1>Taste Haven</h1>
+        <p>Experience gourmet dining with unforgettable flavors.</p>
+
+        <button class="btn menu-btn"
+        onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">
+        View Menu
+        </button>
+
+        <button class="btn book-btn"
+        onclick="openPopup()">
+        Book Table
+        </button>
+    </div>
+</section>
+
+<section class="menu" id="menu">
+    <h2>Our Specials</h2>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>Grilled Steak</h3>
+            <p>Premium grilled steak with herbs.</p>
+            <div class="price">$24</div>
+        </div>
+
+        <div class="card">
+            <h3>Italian Pizza</h3>
+            <p>Wood-fired pizza with fresh toppings.</p>
+            <div class="price">$18</div>
+        </div>
+
+        <div class="card">
+            <h3>Seafood Pasta</h3>
+            <p>Rich creamy pasta with seafood.</p>
+            <div class="price">$21</div>
+        </div>
+
+    </div>
+</section>
+
+<div class="popup" id="popup">
+    <div class="popup-content">
+        <h2>Reserve a Table</h2>
+
+        <input type="text" placeholder="Your Name">
+        <input type="date">
+        <input type="number" placeholder="Guests">
+
+        <button class="reserve"
+        onclick="alert('Reservation Submitted!')">
+        Reserve
+        </button>
+
+        <button class="close"
+        onclick="closePopup()">
+        Close
+        </button>
+    </div>
+</div>
+
+<footer>
+    © 2026 Taste Haven Restaurant
+</footer>
+
+<script>
+function openPopup(){
+    document.getElementById("popup").style.display="flex";
+}
+
+function closePopup(){
+    document.getElementById("popup").style.display="none";
+}
+
+/* Mouse 3D Effect */
+document.addEventListener("mousemove",(e)=>{
+    let x=(window.innerWidth/2-e.pageX)/50;
+    let y=(window.innerHeight/2-e.pageY)/50;
+
+    document.querySelector(".content").style.transform =
+    `rotateY(${x}deg) rotateX(${-y}deg)`;
+});
+</script>
+<script src="script.js"></script>
+
+</body>
+</html>
